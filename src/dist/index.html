@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoRadar | Live Prices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/CryptoRadar/assets/index-DCRhYh-r.js"></script>
+  <link rel="stylesheet" crossorigin href="/CryptoRadar/assets/index-BjfDhK4P.css">
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <div class="radar-icon"></div>
+      <h1>CryptoRadar</h1>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="active">Dashboard</a>
+      <a href="#">Watchlist</a>
+      <a href="#">News</a>
+      <a href="#">Portfolio</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls">
+      <input type="text" id="search-input" placeholder="Search coins (e.g. Bitcoin)..." />
+      <select id="sort-select">
+        <option value="market_cap">Sort by Market Cap</option>
+        <option value="price_desc">Sort by Price (High to Low)</option>
+        <option value="price_asc">Sort by Price (Low to High)</option>
+        <option value="change_desc">Sort by 24h Change</option>
+      </select>
+    </section>
+
+    <section id="coin-list" class="grid-container">
+      <!-- Cards rendered via JS -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 CryptoRadar - WDD 330 Project</p>
+  </footer>
+</body>
+</html>
