@@ -1,77 +1,73 @@
 import CoinData from './CoinData.mjs';
-import { formatCurrency, formatPercentage } from './utils.mjs';
+import { renderCoinList } from './CoinList.mjs';
+import { setupStarButtons, updateWatchCount } from './Watchlist.mjs';
+import { loadHeaderFooter, renderError, renderLoading } from './utils.mjs';
 
 const coinData = new CoinData();
+const coinListElement = document.getElementById('coin-list');
+const searchInput = document.getElementById('search-input');
+const sortSelect = document.getElementById('sort-select');
+const filterSelect = document.getElementById('filter-select');
+
 let allCoins = [];
 
 async function initDashboard() {
-  const coinListElement = document.getElementById('coin-list');
-  coinListElement.innerHTML = '<p class="loading">Loading live prices...</p>';
-  
-  allCoins = await coinData.getTopCoins();
-  renderCoinList(allCoins);
+  await loadHeaderFooter('dashboard');
+  updateWatchCount();
 
-  document.getElementById('search-input').addEventListener('input', handleSearch);
-  document.getElementById('sort-select').addEventListener('change', handleSort);
-}
-
-function renderCoinList(coins) {
-  const coinListElement = document.getElementById('coin-list');
-  coinListElement.innerHTML = '';
-
-  if (coins.length === 0) {
-    coinListElement.innerHTML = '<p>No coins found.</p>';
+  renderLoading(coinListElement, 'Loading live prices...');
+  try {
+    allCoins = await coinData.getTopCoins();
+    updateView();
+  } catch (error) {
+    renderError(coinListElement, error.message);
     return;
   }
 
-  const html = coins.map(coin => {
-    const isPositive = coin.price_change_percentage_24h > 0;
-    const colorClass = isPositive ? 'positive' : 'negative';
-    
-    return `
-      <div class="coin-card">
-        <div class="coin-header">
-          <img src="${coin.image}" alt="${coin.name} logo" class="coin-icon" />
-          <div class="coin-name-group">
-            <h2>${coin.name}</h2>
-            <span class="coin-symbol">${coin.symbol.toUpperCase()}</span>
-          </div>
-        </div>
-        <div class="coin-price-group">
-          <p class="coin-price">${formatCurrency(coin.current_price)}</p>
-          <p class="coin-change ${colorClass}">${formatPercentage(coin.price_change_percentage_24h)}</p>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  coinListElement.innerHTML = html;
+  searchInput.addEventListener('input', updateView);
+  sortSelect.addEventListener('change', updateView);
+  filterSelect.addEventListener('change', updateView);
+  setupStarButtons(coinListElement);
 }
 
-function handleSearch(event) {
-  const query = event.target.value.toLowerCase();
-  const filtered = allCoins.filter(coin => 
-    coin.name.toLowerCase().includes(query) || 
-    coin.symbol.toLowerCase().includes(query)
+// apply search + filter + sort together so they don't undo each other
+function updateView() {
+  const query = searchInput.value.trim().toLowerCase();
+  const filter = filterSelect.value;
+
+  let coins = allCoins.filter(
+    (coin) =>
+      coin.name.toLowerCase().includes(query) ||
+      coin.symbol.toLowerCase().includes(query)
   );
-  renderCoinList(filtered);
-}
 
-function handleSort(event) {
-  const sortType = event.target.value;
-  let sorted = [...allCoins];
-
-  if (sortType === 'market_cap') {
-    sorted.sort((a, b) => b.market_cap - a.market_cap);
-  } else if (sortType === 'price_desc') {
-    sorted.sort((a, b) => b.current_price - a.current_price);
-  } else if (sortType === 'price_asc') {
-    sorted.sort((a, b) => a.current_price - b.current_price);
-  } else if (sortType === 'change_desc') {
-    sorted.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
+  if (filter === 'gainers') {
+    coins = coins.filter((coin) => coin.price_change_percentage_24h >= 0);
+  } else if (filter === 'losers') {
+    coins = coins.filter((coin) => coin.price_change_percentage_24h < 0);
   }
 
-  renderCoinList(sorted);
+  renderCoinList(sortCoins(coins, sortSelect.value), coinListElement);
 }
 
-document.addEventListener('DOMContentLoaded', initDashboard);
+function sortCoins(coins, sortType) {
+  const sorted = [...coins];
+  switch (sortType) {
+    case 'price_desc':
+      return sorted.sort((a, b) => b.current_price - a.current_price);
+    case 'price_asc':
+      return sorted.sort((a, b) => a.current_price - b.current_price);
+    case 'change_desc':
+      return sorted.sort(
+        (a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h
+      );
+    case 'change_asc':
+      return sorted.sort(
+        (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h
+      );
+    default:
+      return sorted.sort((a, b) => b.market_cap - a.market_cap);
+  }
+}
+
+initDashboard();
