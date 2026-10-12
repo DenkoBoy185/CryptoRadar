@@ -1,7 +1,13 @@
 import CoinData from './CoinData.mjs';
 import { renderCoinList } from './CoinList.mjs';
 import { setupStarButtons, updateWatchCount } from './Watchlist.mjs';
-import { loadHeaderFooter, renderError, renderLoading } from './utils.mjs';
+import {
+  getLocalStorage,
+  setLocalStorage,
+  loadHeaderFooter,
+  renderError,
+  renderLoading,
+} from './utils.mjs';
 
 const coinData = new CoinData();
 const coinListElement = document.getElementById('coin-list');
@@ -14,6 +20,7 @@ let allCoins = [];
 async function initDashboard() {
   await loadHeaderFooter('dashboard');
   updateWatchCount();
+  restorePreferences();
 
   renderLoading(coinListElement, 'Loading live prices...');
   try {
@@ -25,9 +32,23 @@ async function initDashboard() {
   }
 
   searchInput.addEventListener('input', updateView);
-  sortSelect.addEventListener('change', updateView);
-  filterSelect.addEventListener('change', updateView);
+  sortSelect.addEventListener('change', () => {
+    setLocalStorage('cr-sort', sortSelect.value);
+    updateView();
+  });
+  filterSelect.addEventListener('change', () => {
+    setLocalStorage('cr-filter', filterSelect.value);
+    updateView();
+  });
   setupStarButtons(coinListElement);
+}
+
+// put back the sort and filter the user chose last time
+function restorePreferences() {
+  const sort = getLocalStorage('cr-sort');
+  const filter = getLocalStorage('cr-filter');
+  if (sort) sortSelect.value = sort;
+  if (filter) filterSelect.value = filter;
 }
 
 // apply search + filter + sort together so they don't undo each other
