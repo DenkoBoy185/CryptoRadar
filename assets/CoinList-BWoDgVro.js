@@ -1,4 +1,4 @@
-import{a as e,l as t,o as n,r}from"./Watchlist-C1P1_qbp.js";function i(i){let a=i.price_change_percentage_24h;return`
+import{a as e,l as t,o as n,r}from"./Watchlist-YD3agl3G.js";function i(i){let a=i.price_change_percentage_24h;return`
     <article class="coin-card">
       <div class="coin-header">
         <a class="coin-link" href="/CryptoRadar/coin/?id=${i.id}">

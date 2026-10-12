@@ -1,4 +1,4 @@
-import{a as e,c as t,d as n,f as r,i,l as a,n as o,o as s,p as c,r as l,s as u,u as d}from"./Watchlist-C1P1_qbp.js";import{t as f}from"./CoinData-BTqBSkTz.js";var p=class{constructor(e,t,n){this.coinId=e,this.dataSource=t,this.container=n,this.coin=null}async init(){this.coin=await this.dataSource.getCoinById(this.coinId),this.render(),o(this.container)}render(){let n=this.coin,r=n.market_data,i=r.price_change_percentage_24h;document.title=`${n.name} (${n.symbol.toUpperCase()}) Price | CryptoRadar`,this.container.innerHTML=`
+import{a as e,c as t,d as n,f as r,i,l as a,m as o,n as s,o as c,p as l,r as u,s as d}from"./Watchlist-YD3agl3G.js";import{t as f}from"./CoinData-BTqBSkTz.js";var p=class{constructor(e,t,n){this.coinId=e,this.dataSource=t,this.container=n,this.coin=null}async init(){this.coin=await this.dataSource.getCoinById(this.coinId),this.render(),s(this.container)}render(){let n=this.coin,r=n.market_data,i=r.price_change_percentage_24h;document.title=`${n.name} (${n.symbol.toUpperCase()}) Price | CryptoRadar`,this.container.innerHTML=`
       <a class="back-link" href="/CryptoRadar/">&larr; Back to dashboard</a>
 
       <div class="detail-header">
@@ -7,11 +7,11 @@ import{a as e,c as t,d as n,f as r,i,l as a,n as o,o as s,p as c,r as l,s as u,u
           <h1>${n.name}</h1>
           <span class="coin-symbol">#${n.market_cap_rank??`-`} · ${n.symbol.toUpperCase()}</span>
         </div>
-        ${l({id:n.id,name:n.name})}
+        ${u({id:n.id,name:n.name})}
       </div>
 
       <div class="detail-price">
-        <p class="coin-price">${s(r.current_price.usd)}</p>
+        <p class="coin-price">${c(r.current_price.usd)}</p>
         <p class="coin-change ${e(i)}">${a(i)} (24h)</p>
       </div>
 
@@ -24,8 +24,8 @@ import{a as e,c as t,d as n,f as r,i,l as a,n as o,o as s,p as c,r as l,s as u,u
         ${this.statTemplate(`30d Change`,a(r.price_change_percentage_30d),e(r.price_change_percentage_30d))}
         ${this.statTemplate(`Circulating Supply`,t(r.circulating_supply,!1))}
         ${this.statTemplate(`Max Supply`,r.max_supply?t(r.max_supply,!1):`∞`)}
-        ${this.statTemplate(`All-Time High`,s(r.ath.usd))}
-        ${this.statTemplate(`ATH Date`,u(r.ath_date.usd))}
+        ${this.statTemplate(`All-Time High`,c(r.ath.usd))}
+        ${this.statTemplate(`ATH Date`,d(r.ath_date.usd))}
       </dl>
 
       ${this.aboutTemplate(n)}
@@ -36,8 +36,8 @@ import{a as e,c as t,d as n,f as r,i,l as a,n as o,o as s,p as c,r as l,s as u,u
           <span class="range-marker" style="left: ${Math.min(100,Math.max(0,i))}%" title="Current price"></span>
         </div>
         <div class="range-labels">
-          <span>Low ${s(t)}</span>
-          <span>High ${s(n)}</span>
+          <span>Low ${c(t)}</span>
+          <span>High ${c(n)}</span>
         </div>
       </section>`}aboutTemplate(e){let t=new DOMParser().parseFromString(e.description.en||``,`text/html`).body.textContent.split(/\r?\n\s*\r?\n/).map(e=>e.trim()).filter(Boolean).slice(0,3),n=e.links.homepage.find(e=>e);return`
       <section class="about">
@@ -47,4 +47,4 @@ import{a as e,c as t,d as n,f as r,i,l as a,n as o,o as s,p as c,r as l,s as u,u
           ${n?`<a class="btn" href="${n}" target="_blank" rel="noopener">Official website</a>`:``}
           <a class="btn" href="https://www.coingecko.com/en/coins/${e.id}" target="_blank" rel="noopener">View on CoinGecko</a>
         </div>
-      </section>`}},m=document.getElementById(`coin-detail`);async function h(){await n(`dashboard`),i();let e=d(`id`);if(!e)r(m,`No coin was selected. Go back to the dashboard and pick one.`);else{c(m,`Loading coin details...`);try{await new p(e,new f,m).init()}catch(e){r(m,e.message)}}}h();
+      </section>`}},m=document.getElementById(`coin-detail`);async function h(){await r(`dashboard`),i();let e=n(`id`);if(!e)l(m,`No coin was selected. Go back to the dashboard and pick one.`);else{o(m,`Loading coin details...`);try{await new p(e,new f,m).init()}catch(e){l(m,e.message)}}}h();
