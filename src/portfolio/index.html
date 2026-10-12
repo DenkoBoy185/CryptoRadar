@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Track what your cryptocurrency holdings are worth with live prices on CryptoRadar." />
+    <title>My Portfolio | CryptoRadar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script type="module" src="../js/portfolio.js"></script>
+  </head>
+  <body>
+    <header id="main-header"></header>
+
+    <main>
+      <h1>My Portfolio</h1>
+      <p class="page-intro">Enter how much of each coin you own and CryptoRadar will calculate what it's worth with live prices.</p>
+
+      <form id="holding-form" class="holding-form" novalidate>
+        <div class="field">
+          <label for="coin-select">Coin</label>
+          <select id="coin-select" required>
+            <option value="">Loading coins...</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="amount-input">Amount</label>
+          <input type="number" id="amount-input" min="0" step="any" placeholder="e.g. 0.5" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Add to portfolio</button>
+        <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+      </form>
+
+      <section id="portfolio-summary" class="portfolio-summary hide" aria-live="polite"></section>
+      <section id="holdings" class="holdings" aria-live="polite"></section>
+    </main>
+
+    <footer id="main-footer"></footer>
+  </body>
+</html>

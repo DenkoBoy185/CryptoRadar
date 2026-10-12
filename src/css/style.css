@@ -87,7 +87,9 @@ main > h1 {
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
 }
 
 .btn:hover {
@@ -197,6 +199,16 @@ select {
 input {
   flex: 1 1 280px;
   max-width: 420px;
+  transition:
+    max-width 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+#search-input:focus {
+  max-width: 560px;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(0, 200, 83, 0.35);
 }
 
 input:focus,
@@ -595,6 +607,143 @@ a:focus-visible {
   flex: 1;
 }
 
+/* ---------- portfolio page ---------- */
+.holding-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  background-color: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 200px;
+}
+
+.field label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.field input {
+  /* the global input rule uses flex-basis, which would set the height in a column */
+  flex: none;
+  max-width: none;
+}
+
+[aria-invalid='true'] {
+  border-color: var(--negative);
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--bg-dark);
+  font-weight: 700;
+}
+
+.btn-primary:hover {
+  background-color: #00e05e;
+  transform: translateY(-2px);
+}
+
+.form-message {
+  flex-basis: 100%;
+  min-height: 1.5em;
+  color: var(--positive);
+  font-size: 0.9rem;
+}
+
+.form-message.error {
+  color: var(--negative);
+}
+
+.portfolio-summary {
+  background: linear-gradient(135deg, var(--primary), var(--bg-card));
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: fade-in 0.5s ease-out;
+}
+
+.summary-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.summary-total {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+.portfolio-summary .coin-change {
+  font-weight: 700;
+}
+
+.holdings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.holding {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  animation: fade-in 0.4s ease-out;
+  transition: background-color 0.2s;
+}
+
+.holding:hover {
+  background-color: #1b2a4d;
+}
+
+.holding .coin-link {
+  flex: 1;
+}
+
+.holding-value {
+  text-align: right;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.remove-btn:hover {
+  color: var(--negative);
+  background-color: rgba(255, 23, 68, 0.1);
+}
+
 /* ---------- footer (loaded from partials/footer.html) ---------- */
 #main-footer {
   text-align: center;
@@ -627,6 +776,20 @@ a:focus-visible {
 
   .detail-price .coin-price {
     font-size: 1.75rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .holding {
+    flex-wrap: wrap;
+  }
+
+  .holding-value {
+    text-align: left;
   }
 }
 

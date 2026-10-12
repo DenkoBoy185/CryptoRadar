@@ -17,6 +17,7 @@ export default defineConfig({
         coin: resolve(root, 'coin/index.html'),
         watchlist: resolve(root, 'watchlist/index.html'),
         news: resolve(root, 'news/index.html'),
+        portfolio: resolve(root, 'portfolio/index.html'),
       },
     },
   },
